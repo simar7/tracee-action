@@ -1,0 +1,11 @@
+name: 'Aqua Security Tracee Stop'
+description: 'Stop Runtime Security and Forensics using eBPF'
+author: 'Aqua Security'
+
+runs:
+  using: 'composite'
+  steps:
+  - shell: bash
+    run: |
+      docker kill --signal="SIGINT" tracee-profiler
+      docker wait tracee-profiler
