@@ -1,11 +1,31 @@
-name: 'Aqua Security Tracee Stop'
-description: 'Stop Runtime Security and Forensics using eBPF'
+name: 'Aqua Security Tracee Stop and Check'
+description: 'Stop & Checks Tracee results with Runtime Security and Forensics using eBPF'
 author: 'Aqua Security'
+inputs:
+  workdir:
+    description: "Working directory for Tracee"
+    required: true
+    default: "/tmp/tracee"
+  github-auth-token:
+    description: "GitHub Repo token to create PR"
+    required: true
 
 runs:
   using: 'composite'
   steps:
   - shell: bash
     run: |
+      echo "Stopping Trace..."
       docker kill --signal="SIGINT" tracee-profiler
       docker wait tracee-profiler
+
+      echo "Checking results..."
+      cp ${{ inputs.workdir }}/out/tracee.profile .
+      git config --global user.email "opensource@aquasec.com"
+      git config --global user.name "Tracee Bot"
+      git checkout -B 'tracee-profile-update'
+      git add tracee.profile
+      git commit -m 'update tracee.profile'
+      git push -f --set-upstream origin tracee-profile-update
+      gh auth login --with-token <<<'${{ inputs.github-auth-token }}'
+      gh pr create --title "Updates to tracee.profile" --body "List of runtime programs executed during this pipeline run. Powered by Tracee"
