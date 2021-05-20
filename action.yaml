@@ -4,7 +4,7 @@ author: 'Aqua Security'
 inputs:
   workdir:
     description: "Working directory for Tracee"
-    required: true
+    required: false
     default: "/tmp/tracee"
 
 runs:
