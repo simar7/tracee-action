@@ -6,9 +6,9 @@ inputs:
     description: "Working directory for Tracee"
     required: true
     default: "/tmp/tracee"
-  github-auth-token:
-    description: "GitHub Repo token to create PR"
-    required: true
+#  github-auth-token:
+#    description: "GitHub Repo token to create PR"
+#    required: true
 
 runs:
   using: 'composite'
@@ -27,5 +27,5 @@ runs:
       git add tracee.profile
       git commit -m 'update tracee.profile'
       git push -f --set-upstream origin tracee-profile-update
-      gh auth login --with-token <<<'${{ inputs.github-auth-token }}'
+      gh auth login --with-token <<<'${{ github.token }}'
       gh pr create --title "Updates to tracee.profile" --body "List of runtime programs executed during this pipeline run. Powered by Tracee"
