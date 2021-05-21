@@ -20,10 +20,10 @@ runs:
       cp ${{ inputs.workdir }}/out/tracee.profile .
       git config --global user.email "opensource@aquasec.com"
       git config --global user.name "Tracee Bot"
+      gh auth login --with-token <<<'${{ github.token }}'
       defaultBranch=$(gh repo view --json defaultBranchRef --jq .defaultBranchRef.name)
       git checkout -B 'tracee-profile-update' $defaultBranch
       git add tracee.profile
       git commit -m 'update tracee.profile'
       git push -f --set-upstream origin tracee-profile-update
-      gh auth login --with-token <<<'${{ github.token }}'
       gh pr create --title "Updates to tracee.profile" --body "List of runtime programs executed during this pipeline run. Powered by Tracee"
