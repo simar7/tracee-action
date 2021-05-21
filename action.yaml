@@ -17,8 +17,9 @@ runs:
       docker wait tracee-profiler
 
       echo "Checking results..."
-      cmp --silent ${{ inputs.workdir }}/out/tracee.profile ./tracee.profile
-      if [ $? -ne 0 ]; then
+      cmp ${{ inputs.workdir }}/out/tracee.profile ./tracee.profile
+      rc=$?
+      if [ $rc -ne 0 ]; then
         echo "Differences found..."
         diff ${{ inputs.workdir }}/out/tracee.profile ./tracee.profile
         echo "Creating a commit with all changes..."
