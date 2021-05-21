@@ -1,5 +1,4 @@
 #!/bin/bash
-set -x
 
 echo "Stopping Tracee..."
 docker kill --signal="SIGINT" tracee-profiler
@@ -9,7 +8,7 @@ workdir=$1
 token=$2
 
 echo "Checking results..."
-cmp $workdir/out/tracee.profile ./tracee.profile
+cmp --silent $workdir/out/tracee.profile ./tracee.profile
 rc=$?
 if [ $rc -ne 0 ]; then
   echo "Differences found..."
