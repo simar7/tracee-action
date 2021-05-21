@@ -21,8 +21,7 @@ runs:
       git config --global user.email "opensource@aquasec.com"
       git config --global user.name "Tracee Bot"
       gh auth login --with-token <<<'${{ github.token }}'
-      defaultBranch=$(gh repo view --json defaultBranchRef --jq .defaultBranchRef.name)
-      git checkout -B 'tracee-profile-update' $defaultBranch
+      git checkout -B 'tracee-profile-update' $(git remote show origin | grep 'HEAD branch' | cut -d' ' -f5)
       git add tracee.profile
       git commit -m 'update tracee.profile'
       git push -f --set-upstream origin tracee-profile-update
