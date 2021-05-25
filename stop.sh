@@ -1,9 +1,5 @@
 #!/bin/bash
 
-echo "Stopping Tracee..."
-docker kill --signal="SIGINT" tracee-profiler
-docker wait tracee-profiler
-
 workdir=$1
 token=$2
 

@@ -11,4 +11,9 @@ runs:
   using: 'composite'
   steps:
   - shell: bash
-    run: ${{ github.action_path }}/stop.sh ${{ inputs.workdir }} ${{ github.token }}
+    run: |
+      echo "Stopping Tracee..."
+      docker kill --signal="SIGINT" tracee-profiler
+      docker wait tracee-profiler
+
+      ${{ github.action_path }}/stop.sh ${{ inputs.workdir }} ${{ github.token }}
