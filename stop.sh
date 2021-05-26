@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 
 workdir="$1"
 token="$2"
@@ -23,7 +24,7 @@ if [ $rc -ne 0 ]; then
     git add tracee.profile
     git commit -m 'update tracee.profile'
     git push -f --set-upstream origin tracee-profile-update
-    gh pr create --title "Updates to tracee.profile" --body $(echo $pr_message | base64 -d)
+    gh pr create --title "Updates to tracee.profile" --body "$(echo $pr_message | base64 -d)"
     echo "PR Created"
   fi
 
