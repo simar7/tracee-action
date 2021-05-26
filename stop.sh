@@ -1,5 +1,4 @@
 #!/bin/bash
-set -x
 
 workdir="$1"
 token="$2"
