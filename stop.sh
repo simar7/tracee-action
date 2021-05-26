@@ -22,7 +22,7 @@ if [ $rc -ne 0 ]; then
     git add tracee.profile
     git commit -m 'update tracee.profile'
     git push -f --set-upstream origin tracee-profile-update
-    gh pr create --title "Updates to tracee.profile" --body "List of runtime programs executed during this pipeline run. Powered by Tracee"
+    gh pr create --title "Updates to tracee.profile" --body-file ./commit-msg.md
     echo "PR Created"
   fi
 
