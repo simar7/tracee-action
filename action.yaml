@@ -12,8 +12,9 @@ runs:
   steps:
   - shell: bash
     run: |
-      docker pull simar7/tracee:latest
-      docker run -d --name tracee-profiler --rm --privileged \
-      -v /proc:/proc -v /boot:/boot -v /lib/modules/:/lib/modules/:ro \
-      -v /usr/src:/usr/src:ro -v ${{ inputs.workdir }}:/tmp/tracee simar7/tracee:latest \
-      trace --trace event=execve --capture exec --capture profile
+      go run main.go
+#      docker pull simar7/tracee:latest
+#      docker run -d --name tracee-profiler --rm --privileged \
+#      -v /proc:/proc -v /boot:/boot -v /lib/modules/:/lib/modules/:ro \
+#      -v /usr/src:/usr/src:ro -v ${{ inputs.workdir }}:/tmp/tracee simar7/tracee:latest \
+#      trace --trace event=execve --capture exec --capture profile
